@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="website for calculating the nth term of a sequence in various forms by Chulabhorn Science School Phitsanulok">
+  <meta name="keywords" content="sequence, arithmetic sequence, geometric sequence, series, Newton's divided difference, mathematics">
+  <meta name="author" content="Princess Chulabhorn Science High School Phitsanulok 29, Koon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src='https://cdn.jsdelivr.net/npm/bignumber.js@9.3.1/bignumber.min.js'></script>
+  <title>Calculate Sequence</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="head_logo" style="display: flex; align-items: center;">
+    <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
+    <img class="logo" src=".\img\pcshspl.webp" width="30" height="40">
+    <h1 class="hh1">Calculate Sequence</h1>
+    <div class="language">
+      <a href="index.html" class="language-btn">TH</a>
+      <p>|</p> 
+      <a href="index_en.html" class="language-btn">EN</a>
+    </div>
+  </div>  
+  <nav class="sidenav" style="display:none;z-index:2;width:40%;min-width: 45%" id="mySidebar">
+    <a href="javascript:void(0)" onclick="w3_close()"
+    class="w3-bar-item w3-button">ปิด เมนู</a>
+    <a onclick = "document.getElementById('how_to').style.display = 'block'" style = "user-select: none">วิธีการใช้งาน</a>
+    <a onclick = "document.getElementById('setting').style.display = 'block'" style = "user-select: none">ตั้งค่า</a>
+    <a onclick = "document.getElementById('about').style.display = 'block'" style = "user-select: none">เกี่ยวเว็บไซต์</a>
+    <a onclick = "document.getElementById('formula').style.display = 'block'" style = "user-select: none">สูตรที่เกี่ยวข้อง</a>
+    <a onclick = "window.location.href = 'data.html'" style = "user-select: none;">โปรไฟล์</a>
+  </nav>
+  <div id="how_to" class="modal">
+    <div class="modal-content">
+      <div class="container">
+        <h2>วิธีการใช้งาน</h2>
+        <div>
+          <h3>วิธีการใช้งานเว็บไซต์</h3>
+        
+          <p><b>1. กรอกตัวเลขลำดับ</b></p>
+          <ul>
+            <li>เว็บไซต์มีช่องกรอกตัวเลข <b>2 ช่อง</b></li>
+            <li><b>ช่องแรก</b> ใช้สำหรับกรอกตัวเลขลำดับที่ต้องการศึกษา 4–5 ตัวอย่าง</li>
+            <li><b>รูปแบบการกรอก</b>: ใช้เครื่องหมายคอมมา (,) คั่นระหว่างตัวเลข เช่น <code>2,3,4,5,6</code></li>
+            <li><b>ช่องที่สอง</b> ใช้สำหรับกรอกจำนวนพจน์ของลำดับที่ต้องการหา เช่น <code>67</code></li>
+          </ul>
+        
+          <p><b>2. ประมวลผลลำดับ</b></p>
+          <ul>
+            <li>เมื่อกรอกครบทั้งสองช่องแล้ว ให้กดปุ่ม <b>Calculate</b></li>
+            <li>ระบบจะแสดง <b>ค่าพจน์ที่ต้องการ</b> พร้อม <b>วิธีคิดและคำอธิบายทีละขั้นตอน</b></li>
+          </ul>
+        
+          <p><b>3. การตั้งค่ารูปแบบการกรอกข้อมูล</b></p>
+          <ul>
+            <li>ผู้ใช้งานสามารถเปลี่ยนเป็น <b>รูปแบบที่สอง</b> ซึ่งสร้าง <b>ช่องกรอกตัวเลขแยกแต่ละค่า</b></li>
+            <li>มีปุ่ม <b>เพิ่มช่องกรอกข้อมูล</b> สำหรับเพิ่มช่องใหม่ได้ โดยแต่ละช่องกรอกได้เพียง <b>ตัวเลข 1 ค่า</b></li>
+            <li>หลังกรอกครบ ให้กดปุ่ม <b>ดูค่าข้อมูล</b></li>
+            <li>หน้าต่างเว็บไซต์จะแสดงข้อมูลทั้งหมดที่กรอก พร้อมใช้คอมมา (,) ขั้นระหว่างตัวเลข เพื่อให้ผู้ใช้งานตรวจสอบความถูกต้อง</li>
+          </ul>
+        </div>
+      </div>
+      <div class="container" style="background-color:#f1f1f1; text-align: right;">
+        <button type="button" onclick="document.getElementById('how_to').style.display = 'none'" class="cancelbtn">ปิด</button>
+      </div>
+    </div>
+  </div>
+  
+  <div id="setting" class="modal">
+    <div class="modal-content">
+      <div class="container">
+        <h2>รูปแบบการกรอกข้อมูล</h2>
+        <button onclick="run_input(1)">คั้นด้วยลูกน้ำ</button>
+        <button onclick="run_input(2)">กล่องรับค่าที่ให้ผู้ใช้ใส่ทีละรายการ</button>
+      </div>
+      <div class="container" style="background-color:#f1f1f1; text-align: right;">
+        <button type="button" onclick="document.getElementById('setting').style.display = 'none'" class="cancelbtn">ปิด</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="about" class="modal">
+    <div class="modal-content">
+      <div class="container">
+        <h2>เกี่ยวเว็บไซต์</h2>
+        <p>เกี่ยวกับเรา 
+การหาพจน์ที่ n ของลำดับในทางคณิตศาสตร์เป็นหัวข้อที่มีความสำคัญในหลายสาขา เช่น การพยากรณ์อากาศ การวิเคราะห์ข้อมูล การคำนวณทางสถิติ และการแก้ปัญหาทางวิทยาศาศาสตร์ และ
+วิศวกรรม ปัญหาที่เกิดขึ้นคือ การคำนวณพจน์ที่ n ด้วยมืออาจใช้เวลานานและมีโอกาสที่จะคำนวณผิดพลาดได้
+โดยเฉพาะ เมื่อรูปแบบของลำดับมี ความซับซ้อน หรือต้องการความแม่นยำสูง
+นอกจากนี้ความเข้าใจในรูปแบบของลำดับและการวิเคราะห์ผลลัพธ์ยังเป็นสิ่งสำคัญที่สามารถช่วยในการนำไป ประยุกต์ ใช้งาน ในสถานการณ์จริง
+คณะผู้จัดทำจึงมีแนวคิดที่จะศึกษาและพัฒนากระบวนการคำนวณพจน์ที่ n สำหรับลำดับลำดับในรูปแบบต่างๆ พร้อมทั้งออกแบบและพัฒนาเว็บไซต์ที่สามารถช่วยให้ผู้ใช้งานสามารถคำนวณพจน์ที่ ก
+ได้อย่างรวดเร็ว และ ถูกต้อง พร้อมการอธิบายเพื่อนำไปศึกษาต่อ</p>
+      </div>
+      <div class="container" style="background-color:#f1f1f1; text-align: right;">
+        <button type="button" onclick="document.getElementById('about').style.display = 'none'" class="cancelbtn">ปิด</button>
+      </div>
+    </div>
+  </div>
+  
+  <div id="formula" class="modal">
+    <div class="modal-content">
+      <div class="container">
+        <h2>สูตรที่เกี่ยวข้อง</h2>
+        <a href="thai.pdf">เอกสารให้ความรู้เกี่ยวกับลำดับทางคณิตศาสตร์ที่ใช้ในเว็ปไซต์</a>
+      </div>
+      <div class="container" style="background-color:#f1f1f1; text-align: right;">
+        <button type="button" onclick="document.getElementById('formula').style.display = 'none'" class="cancelbtn">ปิด</button>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div id="input_ver_1">
+        <label for="dataInput">ป้อนจุดข้อมูล (คั่นด้วยเครื่องหมายจุลภาค):</label>
+        <input type="text" id="dataInput" placeholder="e.g., 1, 2, 3, 4, 5">
+        <p>ใช้เครื่องหมายจุลภาค (,) เป็นตัวคั่นระหว่างลำดับและไม่ใช้ช่องว่าง</p><br>
+        <p>กรอกได้แค่ เศษส่วน จำนวนเต็ม และ ทศนิยมเท่านั้น หากต้องการกรอกลำดับที่เป็นลำดับฮาร์โมนิกให้กรอก 1/(x) รูปแบบนี้เท่านั้น</p>
+        <label for="x">ค่า x:</label>
+        <input type="number" id="x1" step="1" placeholder="e.g., 3">
+        <br>
+        <input type="checkbox" id="run_table" name="check">
+        <label for="run_table">แสดงตาราง</label>
+        <br>
+        <button id="calculate" onclick="input_1()">Calculate</button>
+      </div>
+      <div id="input_ver_2">
+        <div id="inputsContainer">
+          <div class="inputItem">
+            <input type="text" placeholder="ใส่ค่าของคุณ...">
+            <button type="button" onclick="removeInput(this)">ลบ</button>
+          </div>
+        </div>
+        <button type="button" onclick="addInput()">+ เพิ่มค่า</button>
+        <button type="button" onclick="showValues()">ดูค่าที่กรอก</button>
+        <div id="valuesList"></div>
+        <label for="x">ค่า x:</label>
+        <input type="number" id="x2" step="1" placeholder="e.g., 3">
+        <br>
+        <input type="checkbox" id="run_table" name="check">
+        <label for="run_table">แสดงตาราง</label>
+        <br>
+        <button id="calculate" onclick="input_2()">Calculate</button>
+      </div>
+      <div id="run"></div>
+      <div id="output"></div>
+      <p>*การคำนวณอาจมีข้อผิดพลาดได้ในบางกรณี</p>
+      <br>
+      <p>*บางกรณีการหาอนุกรม n = 25000 เท่านั้น</p>
+      <div id="time"></div>
+    </div>
+    <div>
+      <p class="p1">by pcshspl 29</p>
+    </div>
+    <button onclick="topFunction()" id="top" title="Go to top">Top</button>
+  </div>
+  <script>
+    const user = localStorage.getItem("name");
+    if (user == null) {
+      window.location.href = 'login.html';
+    }
+  </script>
+  <script src="script.js"></script>
+  <script src="script_th.js"></script>
+</body>
+</html>

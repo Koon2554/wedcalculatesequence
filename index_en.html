@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="website for calculating the nth term of a sequence in various forms by Chulabhorn Science School Phitsanulok">
+  <meta name="keywords" content="sequence, arithmetic sequence, geometric sequence, series, Newton's divided difference, mathematics">
+  <meta name="author" content="Princess Chulabhorn Science High School Phitsanulok 29, Koon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src='https://cdn.jsdelivr.net/npm/bignumber.js@9.3.1/bignumber.min.js'></script>
+  <title>Calculate Sequence</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="head_logo" style="display: flex; align-items: center;">
+    <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
+    <img class="logo" src=".\img\pcshspl.webp" width="30" height="40">
+    <h1 class="hh1">Calculate Sequence</h1>
+    <div class="language">
+      <a href="index.html" class="language-btn">TH</a>
+      <p>|</p> 
+      <a href="index_en.html" class="language-btn">EN</a>
+    </div>
+  </div>  
+  <nav class="sidenav" style="display:none;z-index:2;width:40%;min-width: 45%" id="mySidebar">
+    <a href="javascript:void(0)" onclick="w3_close()"
+    class="w3-bar-item w3-button">Close Menu</a>
+    <a onclick = "document.getElementById('how_to').style.display = 'block'" style = "user-select: none">How to Use</a>
+    <a onclick = "document.getElementById('setting').style.display = 'block'" style = "user-select: none">Settings</a>
+    <a onclick = "document.getElementById('about').style.display = 'block'" style = "user-select: none">About Website</a>
+    <a onclick = "document.getElementById('formula').style.display = 'block'" style = "user-select: none">Related Formulas</a>
+  </nav>
+  <div id="how_to" class="modal">
+    <div class="modal-content">
+      <div class="container">
+        <h2>How to Use</h2>
+        <div>
+          <h3>Website Usage Guide</h3>
+        
+          <p><b>1. Entering Sequence Numbers</b></p>
+          <ul>
+            <li>The website has <b>2 input methods</b></li>
+            <li><b>First method</b>: For entering sequence numbers to study 4-5 examples</li>
+            <li><b>Input format</b>: Use commas (,) to separate numbers, e.g., <code>2,3,4,5,6</code></li>
+            <li><b>Second method</b>: For entering a large number of sequence terms, e.g., <code>67</code></li>
+          </ul>
+        
+          <p><b>2. Processing Sequence Results</b></p>
+          <ul>
+            <li>After filling in both fields, click the <b>Calculate</b> button</li>
+            <li>The system will display the <b>required term value</b> along with <b>calculation method and step-by-step explanation</b></li>
+          </ul>
+        
+          <p><b>3. Setting Data Input Format</b></p>
+          <ul>
+            <li>Users can switch to <b>the second format</b> which creates <b>separate input fields for each value</b></li>
+            <li>There is an <b>Add Input Field</b> button to add new fields, with each field accepting <b>only 1 number</b></li>
+            <li>After completion, click the <b>View Data</b> button</li>
+            <li>The website will display all entered data, separated by commas (,) for users to verify accuracy</li>
+          </ul>
+        </div>
+      </div>
+      <div class="container" style="background-color:#f1f1f1; text-align: right;">
+        <button type="button" onclick="document.getElementById('how_to').style.display = 'none'" class="cancelbtn">Close</button>
+      </div>
+    </div>
+  </div>
+  
+  <div id="setting" class="modal">
+    <div class="modal-content">
+      <div class="container">
+        <h2>Data Input Format</h2>
+        <button onclick="run_input(1)">Comma-separated</button>
+        <button onclick="run_input(2)">Box for each value entered</button>
+      </div>
+      <div class="container" style="background-color:#f1f1f1; text-align: right;">
+        <button type="button" onclick="document.getElementById('setting').style.display = 'none'" class="cancelbtn">Close</button>
+      </div>
+    </div>
+  </div>
+  <div id="about" class="modal">
+    <div class="modal-content">
+      <div class="container">
+        <h2>About Website</h2>
+        <p>About Us
+Finding the nth term of mathematical sequences is an important topic in many fields, such as weather forecasting, data analysis, statistical calculations, and solving scientific and engineering problems. The main problem that arises is calculating the nth term manually takes a long time and has a chance of calculation errors, especially when the sequence pattern is complex or requires high precision. Additionally, understanding the sequence pattern and result analysis is still important that can help apply, use, and implement in real situations. Therefore, the development team came up with the idea to study and develop a calculation process for the nth term of sequences in various forms, along with designing and developing a website that can help users calculate the nth term quickly and accurately, with explanations for further learning.</p>
+      </div>
+      <div class="container" style="background-color:#f1f1f1; text-align: right;">
+        <button type="button" onclick="document.getElementById('about').style.display = 'none'" class="cancelbtn">Close</button>
+      </div>
+    </div>
+  </div>
+  <div id="formula" class="modal">
+    <div class="modal-content">
+      <div class="container">
+        <h2>Related Formulas</h2>
+        <a href="thai.pdf">Document about mathematical sequences used in the website</a>
+      </div>
+      <div class="container" style="background-color:#f1f1f1; text-align: right;">
+        <button type="button" onclick="document.getElementById('formula').style.display = 'none'" class="cancelbtn">Close</button>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div id="input_ver_1">
+        <label for="dataInput">Enter data (separated by commas):</label>
+        <input type="text" id="dataInput" placeholder="e.g., 1, 2, 3, 4, 5">
+        <p>Use commas (,) as separators between sequences and do not use spaces</p><br>
+        <p>Only fractions, integers, and decimals are allowed. To enter a harmonic sequence, use only 1/(x).</p>
+        <label for="x">Value of x:</label>
+        <input type="number" id="x1" step="1" placeholder="e.g., 3">
+        <br>
+          <input type="checkbox" id="run_table" name="check">
+          <label for="run_table">Show table</label>
+        <br>
+        <button id="calculate" onclick="input_1()">Calculate</button>
+      </div>
+      <div id="input_ver_2">
+        <div id="inputsContainer">
+          <div class="inputItem">
+            <input type="text" placeholder="Enter your value...">
+            <button type="button" onclick="removeInput(this)">Delete</button>
+          </div>
+        </div>
+        <button type="button" onclick="addInput()">+ Add Value</button>
+        <button type="button" onclick="showValues()">View Entered Data</button>
+        <div id="valuesList"></div>
+        <label for="x">Value of x:</label>
+        <input type="number" id="x2" step="1" placeholder="e.g., 3">
+        <br>
+          <input type="checkbox" id="run_table" name="check">
+          <label for="run_table">Show table</label>
+        <br>
+        <button id="calculate" onclick="input_2()">Calculate</button>
+      </div>
+      <div id="run"></div>
+      <div id="output"></div>
+      <p>*Calculations may have errors in some cases</p>
+      <br>
+      <p>*In some cases, only the series n = 25000 can be found.</p>
+      <div id="time"></div>
+    </div>
+    <div>
+      <p class="p1">by pcshspl 29</p>
+    </div>
+    <button onclick="topFunction()" id="top" title="Go to top">Top</button>
+  </div>
+  <script src="script.js"></script>
+  <script src="script_en.js"></script>
+</body>
+</html>

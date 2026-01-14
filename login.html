@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Calculate Sequence</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .container {
+      background: white;
+      padding: 45px 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      width: 100%;
+      max-width: 420px;
+      animation: slideUp 0.5s ease;
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .logo-section {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+    
+    .logo {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #2563eb, #9333ea);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+    }
+    
+    .logo svg {
+      width: 32px;
+      height: 32px;
+      fill: white;
+    }
+    
+    h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 6px;
+    }
+    
+    .subtitle {
+      color: #64748b;
+      font-size: 14px;
+      font-weight: 400;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: #334155;
+      margin-bottom: 8px;
+    }
+    
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: all 0.3s;
+      background: #f9fafb;
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: #2563eb;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    
+    .error-message {
+      color: #ef4444;
+      font-size: 13px;
+      margin-top: 6px;
+      display: none;
+    }
+    
+    .success-message {
+      color: #10b981;
+      font-size: 13px;
+      margin-top: 6px;
+      display: none;
+    }
+    
+    button {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(135deg, #2563eb, #9333ea);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 10px;
+    }
+    
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    .toggle-link {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 14px;
+      color: #64748b;
+    }
+    
+    .toggle-link a {
+      color: #2563eb;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    
+    .toggle-link a:hover {
+      text-decoration: underline;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    @media (max-width: 480px) {
+      .container {
+        padding: 35px 28px;
+      }
+      
+      h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo-section">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 2v11h3v9l7-12h-4l4-8z"/>
+        </svg>
+      </div>
+      <h1>Calculate Sequence</h1>
+      <p class="subtitle" id="subtitle">Sign in to continue</p>
+    </div>
+    
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="loginUser">Username</label>
+        <input type="text" id="loginUser" placeholder="Enter your username" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+        <div class="error-message" id="loginError">Incorrect username or password</div>
+      </div>
+      <button id="loginSubmit" type="submit">Sign In</button>
+    </form>
+    
+    <form id="signupForm" class="hidden">
+      <div class="form-group">
+        <label for="signupUser">Username</label>
+        <input type="text" id="signupUser" placeholder="Choose a username" required>
+        <div class="error-message" id="userError">Username already exists</div>
+      </div>
+      
+      <div class="form-group">
+        <label for="signupPassword">Password</label>
+        <input type="password" id="signupPassword" placeholder="Choose a password" required>
+        <div class="error-message" id="passError">Password must be at least 6 characters</div>
+      </div>
+      
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+        <div class="error-message" id="confirmError">Passwords do not match</div>
+      </div>
+      
+      <div class="success-message" id="successMessage">Account created successfully!</div>
+      
+      <button id="signupSubmit" type="submit">Sign Up</button>
+    </form>
+    
+    <div class="toggle-link">
+      <span id="toggleText">Don't have an account?</span>
+      <a id="toggleLink">Sign up</a>
+    </div>
+  </div>
+  
+  <script>
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+    const toggleLink = document.getElementById('toggleLink');
+    const toggleText = document.getElementById('toggleText');
+    const subtitle = document.getElementById('subtitle');
+    
+    toggleLink.addEventListener('click', function() {
+      if (loginForm.classList.contains('hidden')) {
+        loginForm.classList.remove('hidden');
+        signupForm.classList.add('hidden');
+        toggleText.textContent = "Don't have an account?";
+        toggleLink.textContent = 'Sign up';
+        subtitle.textContent = 'Sign in to continue';
+        clearErrors();
+      } else {
+        loginForm.classList.add('hidden');
+        signupForm.classList.remove('hidden');
+        toggleText.textContent = 'Already have an account?';
+        toggleLink.textContent = 'Sign in';
+        subtitle.textContent = 'Create your account';
+        clearErrors();
+      }
+    });
+    
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const username = document.getElementById('loginUser').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const loginError = document.getElementById('loginError');
+      const button = document.getElementById('loginSubmit');
+      
+      loginError.style.display = 'none';
+      button.textContent = 'Loading...';
+      button.disabled = true;
+      
+      let url = "https://script.google.com/macros/s/AKfycbwSgnuUlXfG9OJXMYliwvb7VHP-s_yC-T2wK9RkmwnfnFmz2dCNfGTfEn8U8lThP8t8yg/exec?use=get_password&user=";
+      url += encodeURIComponent(username);
+
+      fetch(url)
+        .then(r => r.text())
+        .then(data => {
+          if (password === data) {
+            localStorage.setItem("name", username);
+            window.location.href = 'index.html';
+          } else {
+            loginError.style.display = 'block';
+            button.textContent = 'Sign In';
+            button.disabled = false;
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          loginError.style.display = 'block';
+          button.textContent = 'Sign In';
+          button.disabled = false;
+        });
+    });
+    
+    signupForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const button = document.getElementById('signupSubmit');
+      const username = document.getElementById('signupUser').value.trim();
+      const password = document.getElementById('signupPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      const userError = document.getElementById('userError');
+      const passError = document.getElementById('passError');
+      const confirmError = document.getElementById('confirmError');
+      const successMessage = document.getElementById('successMessage');
+      
+      userError.style.display = 'none';
+      passError.style.display = 'none';
+      confirmError.style.display = 'none';
+      successMessage.style.display = 'none';
+      
+      let hasError = false;
+      
+      if (password.length < 6) {
+        passError.style.display = 'block';
+        hasError = true;
+      }
+      
+      if (password !== confirmPassword) {
+        confirmError.style.display = 'block';
+        hasError = true;
+      }
+      
+      if (!hasError) {
+        let url = "https://script.google.com/macros/s/AKfycbwYcg2sh-TzoH1HrOaoQAAkkVTzFVthmSw3Aejc8WawWJd_jP-fzLnCLp6xlPu-HmYFyg/exec?use=add_user&user=";
+        url += encodeURIComponent(username);
+        url += "&password=";
+        url += encodeURIComponent(password);
+
+        button.textContent = 'Loading...';
+        button.disabled = true;
+
+        fetch(url)
+          .then(r => r.text())
+          .then(res => {
+            button.textContent = 'Sign Up';
+            button.disabled = false;
+          
+            if (res === "OK") {
+              successMessage.style.display = "block";
+              signupForm.reset();
+            } else {
+              userError.style.display = "block";
+            }
+          })
+          .catch(err => {
+            console.error(err);
+            button.textContent = 'Sign Up';
+            button.disabled = false;
+            userError.textContent = 'An error occurred. Please try again.';
+            userError.style.display = 'block';
+          });
+      }
+    });
+    
+    function clearErrors() {
+      document.querySelectorAll('.error-message, .success-message').forEach(el => {
+        el.style.display = 'none';
+      });
+      document.querySelectorAll('input').forEach(input => {
+        input.value = '';
+      });
+    }
+  </script>
+</body>
+</html>
