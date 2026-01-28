@@ -408,11 +408,16 @@ function input_1() {
         res = find_n(num);
         learn(num.is_harmoni, num, res);
     }
-    let url = "https://script.google.com/macros/s/AKfycbwYcg2sh-TzoH1HrOaoQAAkkVTzFVthmSw3Aejc8WawWJd_jP-fzLnCLp6xlPu-HmYFyg/exec?use=save_data&user=";
-    url += encodeURIComponent(username);
-    url += "&num=" + (line) + "&n=" +encodeURIComponent(nValue);
+    console.log(localStorage.getItem("get") === "false");
+    console.log(line);
+    if (localStorage.getItem("get") === "false") { 
+        let url = "https://script.google.com/macros/s/AKfycbwYcg2sh-TzoH1HrOaoQAAkkVTzFVthmSw3Aejc8WawWJd_jP-fzLnCLp6xlPu-HmYFyg/exec?use=save_data&user=";
+        url += encodeURIComponent(username);
+        url += "&num=" + (line) + "&n=" +encodeURIComponent(nValue);
 
-    fetch(url);
+        fetch(url);
+    }
+    localStorage.setItem("get", "false");
     let end = Date.now();
     document.getElementById('time').innerHTML = "ใช้เวลาไป : " + (end - start) + " ms";
     return 0;
@@ -436,7 +441,7 @@ function input_2() {
         const s = values.join(',');
         let url = "https://script.google.com/macros/s/AKfycbwYcg2sh-TzoH1HrOaoQAAkkVTzFVthmSw3Aejc8WawWJd_jP-fzLnCLp6xlPu-HmYFyg/exec?use=save_data&user=";
         url += encodeURIComponent(username);
-        url += "&num=" + (s) + "&n=" +encodeURIComponent(Number(document.getElementById('x2').value));
+        url += "&num=\"" + (s) + "\"&n=" +encodeURIComponent(Number(document.getElementById('x2').value));
         fetch(url);
         console.log(s);
         Filter_data(num, s);
@@ -448,3 +453,31 @@ function input_2() {
     document.getElementById('time').innerHTML = "ใช้เวลาไป : " + (end - start) + " ms";
     return 0;
 }
+
+function to_th() {
+    localStorage.setItem("language", "th");
+}
+
+function to_en() {
+    localStorage.setItem("language", "en");
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+
+  const data = params.get("data");
+  const x = params.get("x");
+
+  if (data) {
+    document.getElementById("dataInput").value = data;
+  }
+
+  if (x) {
+    document.getElementById("x1").value = x;
+  }
+  if (data && x) {
+    localStorage.setItem("get", "true");
+    input_1();
+  }
+  
+});
