@@ -447,3 +447,11 @@ function input_2() {
     document.getElementById('time').innerHTML = "Time elapsed : " + (end - start) + " ms";
     return 0;
 }
+
+function to_th() {
+    localStorage.setItem("language", "th");
+}
+
+function to_en() {
+    localStorage.setItem("language", "en");
+}
