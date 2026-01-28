@@ -178,9 +178,9 @@
 </head>
 <body>
     <div class="head_logo" style="display: flex; align-items: center; width: 100%;">
-      <img class="logo" src="pcshspl.webp" width="30" height="40">
+      <img class="logo" src=".\img\pcshspl.webp" width="30" height="40">
       <h1 class="hh1">Calculate Sequence</h1>
-      <a href="index.html"><img src="home.png" width="30"></a>
+      <a href="index.html"><img src=".\img\home.png" width="30"></a>
       <button onclick="localStorage.clear(); location.reload();" style="margin-left: auto;">logout</button>
     </div> 
     <div class="container">
@@ -217,11 +217,13 @@
       if (user == null) {
         window.location.href = 'login.html';
       }
+      // ===== USER INFO =====
       const username = localStorage.getItem('name') || 'ผู้ใช้';
       document.getElementById('username').textContent = username;
       document.getElementById('avatar').textContent =
         username ? username.charAt(0).toUpperCase() : '?';
 
+      // join date
       const joinDate = localStorage.getItem("joinDate");
       if (joinDate) {
         const d = new Date(joinDate);
@@ -232,9 +234,11 @@
           });
       }
 
+      // ===== TABLE RENDER =====
       function renderTable(data) {
         const tbody = document.getElementById('tableBody');
-  
+    
+        // ถ้าเป็น object → แปลงเป็น array
         if (!Array.isArray(data)) {
           data = [data];
         }
@@ -263,11 +267,15 @@
                   ${numbers.map(n => `<span class="number-tag">${n}</span>`).join('')}
                 </div>
               </td>
+              <td> 
+                <button onclick="to_sol([${String(item.num)}], ${item.n});" style="margin-left: auto;">ดูวิธีทำ</button>
+              </td>
             </tr>
           `;
         }).join('');
       }
 
+      // ===== LOAD DATA =====
       function loadData() {
         if (!localStorage.getItem("name")) {
           document.getElementById('tableBody').innerHTML =
@@ -287,9 +295,12 @@
           });
       }
 
+      function to_sol(num, n) {
+        let url = "index.html?";
+        url += "data=" + num + "&x=" + encodeURIComponent(n);
+        window.location.href = url;
+      }
       loadData();
     </script>
 </body>
-
 </html>
-
