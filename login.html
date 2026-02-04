@@ -234,7 +234,7 @@
       <a id="toggleLink">Sign up</a>
     </div>
   </div>
-  
+  <script src="https://cdn.jsdelivr.net/npm/jhash.js@latest/jhash.min.js"></script>
   <script>
     const loginForm = document.getElementById('loginForm');
     const signupForm = document.getElementById('signupForm');
@@ -278,7 +278,9 @@
       fetch(url)
         .then(r => r.text())
         .then(data => {
-          if (password === data) {
+          const password_hash = JHash.hex_md5(password);
+          console.log(password_hash);
+          if (password_hash === data) {
             localStorage.setItem("name", username);
             window.location.href = 'index.html';
           } else {
@@ -329,7 +331,7 @@
         let url = "https://script.google.com/macros/s/AKfycbwYcg2sh-TzoH1HrOaoQAAkkVTzFVthmSw3Aejc8WawWJd_jP-fzLnCLp6xlPu-HmYFyg/exec?use=add_user&user=";
         url += encodeURIComponent(username);
         url += "&password=";
-        url += encodeURIComponent(password);
+        url += JHash.hex_md5(encodeURIComponent(password));
 
         button.textContent = 'Loading...';
         button.disabled = true;
